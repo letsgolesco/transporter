@@ -10,7 +10,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/compose/transporter/pkg/adaptor"
+	"github.com/letsgolesco/transporter/pkg/adaptor"
 	"github.com/compose/transporter/pkg/pipe"
 )
 
