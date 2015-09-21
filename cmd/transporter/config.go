@@ -21,6 +21,11 @@ type Config struct {
 		Key             string `json:"key" yaml:"key"`           // http basic auth password to send with each event
 		Pid             string `json:"pid" yaml:"pid"`           // http basic auth username to send with each event
 	} `json:"api" yaml:"api"`
+	Sessions struct {
+		URI             string `json:"uri" yaml:"uri"`           // Uri of session store
+		SessionInterval string `json:"interval" yaml:"interval"` // how often to persist the sesion states
+		Type            string `json:"type" yaml:"type"`         // the type of SessionStore to use
+	} `json:"sessions" yaml:"sessions"`
 	Nodes map[string]map[string]interface{}
 }
 
@@ -64,7 +69,7 @@ func LoadConfig(filename string) (config Config, err error) {
 // setConfigEnvironment replaces environment variables marked in the form ${FOO} with the
 // value stored in the environment variable `FOO`
 func setConfigEnvironment(ba []byte) []byte {
-	re := regexp.MustCompile(`\$\{([a-zA-Z0-9]+)\}`)
+	re := regexp.MustCompile(`\$\{([a-zA-Z0-9_]+)\}`)
 
 	matches := re.FindAllSubmatch(ba, -1)
 	if matches == nil {
